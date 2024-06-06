@@ -63,7 +63,7 @@ C/CPP Example
 int main()
 {
     // init config
-    InitConfig('C:\LLM\gguf', -1);
+    InitConfig('C:/LLM/gguf', -1);
   
     // define model
     DefineModel(L"phi-3-mini-4k-instruct.Q4_K_M.gguf",
