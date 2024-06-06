@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{4DA70496-6B82-4F91-B0A7-75F385AE0081}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Infero\Infero.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\pas\testbed\projects\Delphi\testbed_pas.dproj">
+            <Dependencies>Infero\Infero.dproj</Dependencies>
+        </Projects>
+        <Projects Include="..\examples\cpp\testbed\projects\BCB\testbed_cpp.cbproj">
+            <Dependencies>Infero\Infero.dproj</Dependencies>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Infero">
+        <MSBuild Projects="Infero\Infero.dproj"/>
+    </Target>
+    <Target Name="Infero:Clean">
+        <MSBuild Projects="Infero\Infero.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Infero:Make">
+        <MSBuild Projects="Infero\Infero.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="testbed_pas" DependsOnTargets="Infero">
+        <MSBuild Projects="..\examples\pas\testbed\projects\Delphi\testbed_pas.dproj"/>
+    </Target>
+    <Target Name="testbed_pas:Clean" DependsOnTargets="Infero:Clean">
+        <MSBuild Projects="..\examples\pas\testbed\projects\Delphi\testbed_pas.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="testbed_pas:Make" DependsOnTargets="Infero:Make">
+        <MSBuild Projects="..\examples\pas\testbed\projects\Delphi\testbed_pas.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="testbed_cpp" DependsOnTargets="Infero">
+        <MSBuild Projects="..\examples\cpp\testbed\projects\BCB\testbed_cpp.cbproj"/>
+    </Target>
+    <Target Name="testbed_cpp:Clean" DependsOnTargets="Infero:Clean">
+        <MSBuild Projects="..\examples\cpp\testbed\projects\BCB\testbed_cpp.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="testbed_cpp:Make" DependsOnTargets="Infero:Make">
+        <MSBuild Projects="..\examples\cpp\testbed\projects\BCB\testbed_cpp.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Infero;testbed_pas;testbed_cpp"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Infero:Clean;testbed_pas:Clean;testbed_cpp:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Infero:Make;testbed_pas:Make;testbed_cpp:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
